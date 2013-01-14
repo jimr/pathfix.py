@@ -3,13 +3,18 @@
 #
 # See https://github.com/jimr/pathfix.py/blob/master/README.rst for usage
 
+import os
 import re
 import sys
 
 from ConfigParser import SafeConfigParser
 
 parser = SafeConfigParser()
-parser.read('config.ini')
+parser.read(os.path.join(
+    # Allow symlinking pathfix.py to, eg, /usr/local/bin
+    os.path.dirname(os.path.realpath(__file__)),
+    'config.ini',
+))
 
 FILE_PREFIXES = ['file:///', 'smb://']
 DRIVE_RE = re.compile(r'^[A-Z]:\\')
