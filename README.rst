@@ -8,14 +8,20 @@ Using Linux? Tired of receiving emails with links to files of the form ``X:\some
 
 It can handle Windows drive prefixes (if configured), and will also sort out ``file:///`` and ``smb://`` prefixes.
 
-Configuration
-=============
+Installation
+============
 
 Create a ``config.ini`` file that contains the root of your network mounts and any drive mappings (see ``config.example.ini`` to get started).
 
 We assume all your network shares are mounted under a common root, with the form::
 
     /<network mount root>/<host name>/<share name>
+
+To make sure it'll work with your environment, run the tests::
+
+    python setup.py test
+
+You may find it helpful to symlink ``pathfix.py`` to ``/usr/local/bin`` or somewhere else on your ``PATH``.
 
 Usage
 =====

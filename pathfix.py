@@ -5,29 +5,29 @@
 
 import os
 import re
-import sys
 
 from ConfigParser import SafeConfigParser
 
-parser = SafeConfigParser()
-parser.read(os.path.join(
-    # Allow symlinking pathfix.py to, eg, /usr/local/bin
-    os.path.dirname(os.path.realpath(__file__)),
-    'config.ini',
-))
-
-FILE_PREFIXES = ['file:///', 'smb://']
+FILE_PREFIXES = ['file://', 'smb://']
 DRIVE_RE = re.compile(r'^[A-Z]:\\')
-DRIVE_MAP = dict()
-
-for option in parser.options('drive_maps'):
-    DRIVE_MAP[option.upper()] = tuple(
-        parser.get('drive_maps', option).split(':')
-    )
 
 
-def main():
-    path = sys.argv[1]
+def fix_path(path, cfg=None):
+    if not cfg:
+        cfg = os.path.join(
+            # Allow symlinking pathfix.py to, eg, /usr/local/bin
+            os.path.dirname(os.path.realpath(__file__)),
+            'config.ini',
+        )
+
+    parser = SafeConfigParser()
+    parser.read(cfg)
+
+    drive_map = dict()
+    for option in parser.options('drive_maps'):
+        drive_map[option.upper()] = tuple(
+            parser.get('drive_maps', option).split(':')
+        )
 
     for prefix in FILE_PREFIXES:
         if path[:len(prefix)] == prefix:
@@ -36,16 +36,23 @@ def main():
     prefix = parser.get('main', 'network_root')
 
     if DRIVE_RE.search(path):
-        if path[0] not in DRIVE_MAP:
+        if path[0] not in drive_map:
             raise Exception("Unknown drive mapping: %s" % path[0])
-        network_path = DRIVE_MAP.get(path[0])
+        network_path = drive_map.get(path[0])
         path = path[3:]
         prefix += '/%s/%s/' % network_path
 
     path = path.replace('\\', '/')
     path = path.replace('%20', ' ')
 
-    print '%s%s' % (prefix, path)
+    return '%s%s' % (prefix, path)
+
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path', help='the path to fix')
+    parser.add_argument('--config', dest='config', help='config file path')
+    args = parser.parse_args()
+
+    fix_path(args.path, args.config)

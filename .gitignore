@@ -1,5 +1,6 @@
 config.ini
 
+*.sw[op]
 *.py[cod]
 
 # C extensions
