@@ -24,12 +24,16 @@ class TestAll(unittest.TestCase):
             '/media/network/host2/share2/some path/with spaces'
         )
 
+    def test_drive_maps_with_file_prefix(self):
+        fixed = pathfix.fix_path(r'file:///X:/some/path', self.cfg)
+        self.assertEqual(fixed, '/media/network/host1/share1/some/path')
+
     def test_file_prefix(self):
-        fixed = pathfix.fix_path(r'file:///host1/share1/some/path', self.cfg)
+        fixed = pathfix.fix_path(r'file://host1/share1/some/path', self.cfg)
         self.assertEqual(fixed, '/media/network/host1/share1/some/path')
 
     def test_smb_prefix(self):
-        fixed = pathfix.fix_path(r'smb:///host2/share2/some/path', self.cfg)
+        fixed = pathfix.fix_path(r'smb://host2/share2/some/path', self.cfg)
         self.assertEqual(fixed, '/media/network/host2/share2/some/path')
 
 

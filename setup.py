@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='pathfix.py',
-    version='0.2',
+    version='0.2.1',
     provides=['pathfix.py'],
     description='Translate OS X / Windows file URLs to directory paths',
     long_description=open('README.rst').read(),

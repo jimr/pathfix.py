@@ -6,7 +6,7 @@ Using Linux? Tired of receiving emails with links to files of the form ``X:\some
 
 ``pathfix.py`` takes an unusable path as input and prints a useful one as output. That's it.
 
-It can handle Windows drive prefixes (if configured), and will also sort out ``file:///`` and ``smb://`` prefixes.
+It can handle Windows drive prefixes (if configured), and will also sort out ``file://`` and ``smb://`` prefixes.
 
 Installation
 ============

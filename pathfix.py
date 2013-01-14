@@ -8,8 +8,8 @@ import re
 
 from ConfigParser import SafeConfigParser
 
-FILE_PREFIXES = ['file://', 'smb://']
-DRIVE_RE = re.compile(r'^[A-Z]:\\')
+FILE_PREFIXES = ['file:///', 'file://', 'smb://']
+DRIVE_RE = re.compile(r'^[A-Z]:(\\?|//?)')
 
 
 def fix_path(path, cfg=None):
@@ -30,8 +30,9 @@ def fix_path(path, cfg=None):
         )
 
     for prefix in FILE_PREFIXES:
-        if path[:len(prefix)] == prefix:
+        if path.startswith(prefix):
             path = path[len(prefix):]
+            break
 
     prefix = parser.get('main', 'network_root')
 
@@ -44,6 +45,9 @@ def fix_path(path, cfg=None):
 
     path = path.replace('\\', '/')
     path = path.replace('%20', ' ')
+
+    if not (path.startswith('/') or prefix.endswith('/')):
+        path = '/%s' % path
 
     return '%s%s' % (prefix, path)
 
