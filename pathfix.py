@@ -7,9 +7,15 @@ import os
 import re
 
 try:
-    from ConfigParser import SafeConfigParser
-except:  # py3k
-    from configparser import SafeConfigParser
+    from ConfigParser import SafeConfigParser as ConfigParser
+except ImportError:  # py3k
+    import sys
+    minor = sys.version_info[1]
+    if minor >= 2:
+        # SafeConfigParser is deprecated as of 3.2
+        from configparser import ConfigParser
+    else:
+        from configparser import SafeConfigParser as ConfigParser
 
 FILE_PREFIXES = ['file:///', 'file://', 'smb://']
 DRIVE_RE = re.compile(r'^[A-Z]:(\\?|//?)')
@@ -23,7 +29,7 @@ def fix_path(path, cfg=None):
             'config.ini',
         )
 
-    parser = SafeConfigParser()
+    parser = ConfigParser()
     parser.read(cfg)
 
     drive_map = dict()
@@ -46,8 +52,7 @@ def fix_path(path, cfg=None):
         path = path[3:]
         prefix += '/%s/%s/' % network_path
 
-    path = path.replace('\\', '/')
-    path = path.replace('%20', ' ')
+    path = path.replace('\\', '/').replace('%20', ' ')
 
     if not (path.startswith('/') or prefix.endswith('/')):
         path = '/%s' % path
