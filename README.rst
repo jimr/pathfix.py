@@ -2,6 +2,9 @@
 pathfix.py
 ==========
 
+.. image:: https://travis-ci.org/jimr/pathfix.py.png
+    :target: http://travis-ci.org/jimr/pathfix.py
+
 Using Linux? Tired of receiving emails with links to files of the form ``X:\some%20path\on\remote%20share\spreadsheet.xls``? Then we can help!
 
 ``pathfix.py`` takes an unusable path as input and prints a useful one as output. That's it.
