@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='pathfix.py',
-    version='0.1',
+    version='0.2',
     provides=['pathfix.py'],
     description='Translate OS X / Windows file URLs to directory paths',
     long_description=open('README.rst').read(),
@@ -22,4 +22,9 @@ setup(
         ],
     license='MIT',
     test_suite='tests',
+    entry_points={
+        'console_scripts': [
+            'pathfix = pathfix:main',
+        ]
+    },
 )

@@ -48,11 +48,15 @@ def fix_path(path, cfg=None):
     return '%s%s' % (prefix, path)
 
 
-if __name__ == '__main__':
+def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('path', help='the path to fix')
     parser.add_argument('--config', dest='config', help='config file path')
     args = parser.parse_args()
 
-    fix_path(args.path, args.config)
+    print fix_path(args.path, args.config)
+
+
+if __name__ == '__main__':
+    main()
