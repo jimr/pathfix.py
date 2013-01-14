@@ -11,21 +11,30 @@ It can handle Windows drive prefixes (if configured), and will also sort out ``f
 Installation
 ============
 
-Create a ``config.ini`` file that contains the root of your network mounts and any drive mappings (see ``config.example.ini`` to get started).
+It's as easy as ``pip install pathfix.py``.
 
-We assume all your network shares are mounted under a common root, with the form::
+Should work with Python 2.4 - 3.3 and pypy (probably more, but that's as far as it's been tested).
 
-    /<network mount root>/<host name>/<share name>
+There are no requirements unless you're using Python 2.4-2.6, or 3.0-3.1, in which case (if you're installing from source) you need ``argparse``::
+
+    pip install -r requirements.txt
 
 To make sure it'll work with your environment, run the tests::
 
     python setup.py test
 
-If installing from source, you may find it helpful to symlink ``pathfix.py`` to ``/usr/local/bin`` or somewhere else on your ``PATH``, or you can just ``python setup.py install`` and you'll get the ``pathfix`` executable on your path.
+Configuration
+=============
 
-Alternatively, you can just ``pip install pathfix.py``.
+Before using, you need to create a ``config.ini`` file that contains the root of your network mounts and any drive mappings (see ``config.example.ini`` to get started).
 
-If you install with ``pip``, you should probably make a ``config.ini`` somewhere in your home directory and set up an alias, e.g.::
+We assume all your network shares are mounted under a common root, with the form::
+
+    /<network mount root>/<host name>/<share name>
+
+If you installed from source, you may find it helpful to symlink ``pathfix.py`` to ``/usr/local/bin`` or somewhere else on your ``PATH``, or you can just ``python setup.py install`` and you'll get the ``pathfix`` executable on your path.
+
+If you installed with ``pip``, you should probably make a ``config.ini`` somewhere in your home directory and set up an alias, e.g.::
 
     alias pathfix="pathfix --config $HOME/.config/pathfix.ini"
 

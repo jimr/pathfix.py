@@ -3,9 +3,16 @@
 
 from setuptools import setup
 
+install_requires = []
+
+try:
+    import argparse
+except ImportError:
+    install_requires.append('argparse')
+
 setup(
     name='pathfix.py',
-    version='0.2.1',
+    version='0.3',
     provides=['pathfix.py'],
     description='Translate OS X / Windows file URLs to directory paths',
     long_description=open('README.rst').read(),
@@ -18,7 +25,15 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.5',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.0',
+        'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: Implementation :: PyPy',
         ],
     license='MIT',
     test_suite='tests',
@@ -27,4 +42,5 @@ setup(
             'pathfix = pathfix:main',
         ]
     },
+    install_requires=install_requires,
 )

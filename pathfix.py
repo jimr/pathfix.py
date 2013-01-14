@@ -6,7 +6,10 @@
 import os
 import re
 
-from ConfigParser import SafeConfigParser
+try:
+    from ConfigParser import SafeConfigParser
+except:  # py3k
+    from configparser import SafeConfigParser
 
 FILE_PREFIXES = ['file:///', 'file://', 'smb://']
 DRIVE_RE = re.compile(r'^[A-Z]:(\\?|//?)')
@@ -59,7 +62,7 @@ def main():
     parser.add_argument('--config', dest='config', help='config file path')
     args = parser.parse_args()
 
-    print fix_path(args.path, args.config)
+    print(fix_path(args.path, args.config))
 
 
 if __name__ == '__main__':
