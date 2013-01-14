@@ -21,10 +21,11 @@ setup(
     url='https://github.com/jimr/pathfix.py',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        'Environment :: Other Environment',
+        'Environment :: Console',
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.4',
         'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
