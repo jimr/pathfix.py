@@ -7,6 +7,11 @@ import os
 import re
 
 try:
+    from urllib import unquote
+except ImportError:  # py3k
+    from urllib.parse import unquote
+
+try:
     from ConfigParser import SafeConfigParser as ConfigParser
 except ImportError:  # py3k
     import sys
@@ -18,7 +23,7 @@ except ImportError:  # py3k
         from configparser import SafeConfigParser as ConfigParser
 
 FILE_PREFIXES = ['file:///', 'file://', 'smb://']
-DRIVE_RE = re.compile(r'^[A-Z]:(\\|/)')
+DRIVE_RE = re.compile(r'^[A-Z](:|\|)(\\|/)')
 
 
 def fix_path(path, cfg=None):
@@ -65,12 +70,12 @@ def fix_path(path, cfg=None):
         path = DRIVE_RE.split(path)[-1]
         prefix += '/%s/%s/' % drive_map.get(drive)
 
-    path = path.replace('\\', '/').replace('%20', ' ')
+    path = unquote(path.replace('\\', '/'))
 
     if not (path.startswith('/') or prefix.endswith('/')):
         path = '/%s' % path
 
-    return '%s%s' % (prefix, path)
+    return os.path.normpath('%s%s' % (prefix, path))
 
 
 def main():
