@@ -12,7 +12,7 @@ except ImportError:
 
 setup(
     name='pathfix.py',
-    version='0.3.1',
+    version='0.3.2',
     provides=['pathfix.py'],
     description='Translate OS X / Windows file URLs to directory paths',
     long_description=open('README.rst').read(),

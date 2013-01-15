@@ -18,10 +18,16 @@ except ImportError:  # py3k
         from configparser import SafeConfigParser as ConfigParser
 
 FILE_PREFIXES = ['file:///', 'file://', 'smb://']
-DRIVE_RE = re.compile(r'^[A-Z]:(\\?|//?)')
+DRIVE_RE = re.compile(r'^[A-Z]:(\\|/)')
 
 
 def fix_path(path, cfg=None):
+    """Fix the given path.
+
+    If ``cfg`` is provided, we read the configuration from that path instead
+    of the default.
+
+    """
     if not cfg:
         cfg = os.path.join(
             # Allow symlinking pathfix.py to, eg, /usr/local/bin
@@ -45,12 +51,12 @@ def fix_path(path, cfg=None):
 
     prefix = parser.get('main', 'network_root')
 
-    if DRIVE_RE.search(path):
-        if path[0] not in drive_map:
-            raise Exception("Unknown drive mapping: %s" % path[0])
-        network_path = drive_map.get(path[0])
-        path = path[3:]
-        prefix += '/%s/%s/' % network_path
+    if DRIVE_RE.match(path):
+        drive = path[0].upper()
+        if drive not in drive_map:
+            raise Exception("Unknown drive mapping: %s" % drive)
+        path = DRIVE_RE.split(path)[-1]
+        prefix += '/%s/%s/' % drive_map.get(drive)
 
     path = path.replace('\\', '/').replace('%20', ' ')
 
