@@ -1,4 +1,4 @@
-^config.ini
+config.ini
 tox-local.ini
 
 *.sw[op]

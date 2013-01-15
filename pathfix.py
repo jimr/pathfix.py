@@ -29,9 +29,16 @@ def fix_path(path, cfg=None):
 
     """
     if not cfg:
+        # If we're running from a .pyc file, there won't be a symlink, so
+        # finding our way back to the config.ini won't work unless we do it
+        # from the symlinked .py file.
+        fname = __file__
+        if fname.endswith('.pyc'):
+            fname = fname[:-1]
+
         cfg = os.path.join(
             # Allow symlinking pathfix.py to, eg, /usr/local/bin
-            os.path.dirname(os.path.realpath(__file__)),
+            os.path.dirname(os.path.realpath(fname)),
             'config.ini',
         )
 
