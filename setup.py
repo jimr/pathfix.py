@@ -12,7 +12,7 @@ except ImportError:
 
 setup(
     name='pathfix.py',
-    version='0.4',
+    version='0.6.2',
     provides=['pathfix.py'],
     description='Translate OS X / Windows file URLs to directory paths',
     long_description=open('README.rst').read(),
@@ -38,10 +38,7 @@ setup(
         ],
     license='MIT',
     test_suite='tests',
-    entry_points={
-        'console_scripts': [
-            'pathfix = pathfix:main',
-        ]
-    },
+    scripts=['pathfix.py'],
+    py_modules=['pathfix'],
     install_requires=install_requires,
 )
