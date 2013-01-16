@@ -38,7 +38,9 @@ If you installed from source, you may find it helpful to symlink ``pathfix.py`` 
 Usage
 =====
 
-For example, if you have this in your ``config.ini``::
+For example, if you have this in your ``config.ini``:
+
+.. code-block:: ini
 
     [main]
     network_root = /media/network
@@ -47,12 +49,16 @@ For example, if you have this in your ``config.ini``::
     x = host1:share1
     y = host2:share2
 
-Then you can do, for example::
+Then you can do, for example:
+
+.. code-block:: console
 
     % pathfix.py "X:\some%20path\on\remote%20share\spreadsheet.xls"
     /media/network/host1/share1/some path/on/remote share/spreadsheet.xls
 
-Which you can use in subshells to fix arguments to other applications, for example::
+Which you can use in subshells to fix arguments to other applications, for example:
+
+.. code-block:: console
 
     % libreoffice "$(pathfix.py "X:\some%20path\on\remote%20share\spreadsheet.xls")"
 
